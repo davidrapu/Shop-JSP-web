@@ -1,0 +1,1 @@
+<% request.setAttribute("contentPage", "contents/basketContents.jsp"); %><jsp:include page="base.jsp" />
