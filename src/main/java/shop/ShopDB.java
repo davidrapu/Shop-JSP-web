@@ -2,10 +2,7 @@
 package shop;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class ShopDB {
 
@@ -80,6 +77,53 @@ public class ShopDB {
             return null;
         }
     }
+
+    public ArrayList<Product> getAllProductsByPriceAndName(String nameString, float minPrice, float maxPrice) {
+        /*
+            First get all the products then check those products list
+         */
+        ArrayList<Product> finalProducts = new ArrayList<>();
+        Collection<Product> list = getAllProducts();
+        Iterator<Product> i = list.iterator();
+
+        while (i.hasNext()) {
+            Product product = i.next();
+            float convertedPrice = product.price/100f;
+            if(product.title.toLowerCase().contains(nameString.toLowerCase().strip()) && (convertedPrice >= minPrice && convertedPrice <= maxPrice) ) {
+                finalProducts.add(product);
+            };
+        }
+        return finalProducts;
+    }
+
+    public ArrayList<Product> getAllProductsByName(String nameString) {
+        ArrayList<Product> finalProducts = new ArrayList<>();
+        Collection<Product> list = getAllProducts();
+        Iterator<Product> i = list.iterator();
+        while (i.hasNext()) {
+            Product product = i.next();
+            if(product.title.toLowerCase().contains(nameString.toLowerCase().strip())) {
+                finalProducts.add(product);
+            }
+        }
+        return finalProducts;
+    }
+
+    public ArrayList<Product> getAllProductsByPrice(float minPrice, float maxPrice) {
+        ArrayList<Product> finalProducts = new ArrayList<>();
+        Collection<Product> list = getAllProducts();
+        Iterator<Product> i = list.iterator();
+
+        while (i.hasNext()) {
+            Product product = i.next();
+            float convertedPrice = product.price/100f;
+            if(convertedPrice >= minPrice && convertedPrice <= maxPrice) {
+                finalProducts.add(product);
+            }
+        }
+        return finalProducts;
+    }
+
 
     public void order(Basket basket , String customerName) {
         try {
